@@ -22,4 +22,21 @@ router.get('/dbconfig', async (req, res) => {
     }
 })
 
+
+router.get('/documents/:file', async (req, res) => {
+    try{
+        const { file } = req.params;
+        const filePath = path.join(__dirname, '../data', file); 
+      
+        if (fs.existsSync(filePath)) {
+          res.sendFile(filePath);
+        } else {
+          res.status(404).json({ error: 'File not found' });
+        }
+    }
+    catch(err){
+        console.log(err)
+    }
+})
+
 module.exports = router;
